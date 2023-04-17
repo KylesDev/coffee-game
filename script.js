@@ -49,10 +49,11 @@ function guess() {
     } else {
         restringiIntervallo(numero);
         if (numero == numeroSegreto) {
-            alert("Hai vinto! Il numero era " + numeroSegreto + ".");
             document.getElementById("numero").value = "";
             document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
-            document.body.innerHTML = "<h1 class='text-center display-1 mt-5'>PAGA</h1>";
+            document.getElementById("container").style.opacity = 1;
+            document.getElementById("main").style.opacity = 0;
+            document.getElementById("paga").style.opacity = 1;
         } else {
             input.value = "";
             document.getElementById("estremo-minimo").innerHTML = estremoMinimo;
@@ -63,6 +64,7 @@ function guess() {
                     e.style.backgroundColor = "red";
                     e.style.color = "black";
                 });
+                document.getElementById("sudoreGif").style.opacity = 1;
             } else if (intervallo <= 80) {
                 document.querySelectorAll(".estremo").forEach(e => {
                     e.style.backgroundColor = "orange";
@@ -82,5 +84,4 @@ document.getElementById("numero").addEventListener("keydown", function(event) {
 		guess();
 	}
 });
-
 
