@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chi paga il caffè?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <h1 class="text-center">Chi paga il caff&egrave;?</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-8">
+            <div id="estremo-massimo" class="text-center estremo">9999</div>
+        </div>
+        <div class="col-sm-12 col-md-8">
+            <div class="form-group">
+                <input type="number" class="form-control" id="numero" min="0" max="9999" placeholder="Inserisci un numero">
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-8">
+            <div id="estremo-minimo" class="text-center mt-3 estremo">0</div>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary" onclick="guess()">Indovina</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="text-center">
+                <small class="text-muted">KylesDev - v0.1</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

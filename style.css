@@ -1,0 +1,17 @@
+.estremo {
+	background-color: green;
+	color: white;
+	padding: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.estremo-orange {
+	background-color: orange;
+	color: black;
+}
+
+.estremo-red {
+	background-color: red;
+	color: red;
+}
