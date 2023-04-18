@@ -1,5 +1,9 @@
 # Changelog
 
+- 0.3 - by Manuel
+  - Moved from dollar bills to coins
+  - Fixed a container bug
+
 - 0.2 - by Manuel
   - Added money drop when winning
   - Rounded box corners
