@@ -1,4 +1,4 @@
-var numeroSegreto = 2500
+var numeroSegreto = Math.floor(Math.random() * 10000);
 var estremoMinimo = 0;
 var estremoMassimo = 9999;
 var players = [];
@@ -43,7 +43,6 @@ function guess() {
     if (!isValid(numero)) {
         alert("Inserisci un numero valido tra " + estremoMinimo + " e " + estremoMassimo + ".");
     } else {
-        restringiIntervallo(numero);
         if (numero == numeroSegreto) {
             document.getElementById("numero").value = "";
             document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
@@ -54,6 +53,7 @@ function guess() {
             saveHighScore(estremoMinimo, estremoMassimo);
             displayLeaderboard();
         } else {
+            restringiIntervallo(numero);
             input.value = "";
             document.getElementById("estremo-minimo").innerHTML = estremoMinimo;
             document.getElementById("estremo-massimo").innerHTML = estremoMassimo;
@@ -91,7 +91,7 @@ function incrementWinCount(player) {
 function saveHighScore(min, max) {
     var score = {
         player: selectedPlayers[currentPlayerIndex].name,
-        interval: max - min
+        interval: max - min - 2
     };
     leaderboard.push(score);
     leaderboard.sort((a, b) => a.interval - b.interval);
