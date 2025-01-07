@@ -234,6 +234,8 @@ function displayPlayerButtons() {
         var button = document.createElement("button");
         button.className = "btn btn-outline-dark m-2";
         button.textContent = playerNames[i].name;
+        button.style.backgroundColor = "white"; // P36b5
+        button.style.borderColor = "black"; // P36b5
         button.onclick = function() {
             this.classList.toggle("btn-outline-dark");
             this.classList.toggle("btn-primary");
