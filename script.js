@@ -67,6 +67,9 @@ function guess() {
             } else {
                 document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
             }
+            if (estremoMinimo === estremoMassimo) {
+                displayUhOhMessage();
+            }
         }
     }
 }
@@ -74,7 +77,7 @@ function guess() {
 document.getElementById("numero").addEventListener("keydown", function(event) {
 	if (event.keyCode === 13) {
 		event.preventDefault();
-		guess();
+		 guess();
 	}
 });
 
@@ -201,3 +204,32 @@ function updateLeaderboard() {
     }
     saveLeaderboard(leaderboard);
 }
+
+function displayUhOhMessage() {
+    var uhOhMessage = document.createElement("div");
+    uhOhMessage.id = "uh-oh-message";
+    uhOhMessage.textContent = "UH OH...";
+    uhOhMessage.style.position = "fixed";
+    uhOhMessage.style.top = "50%";
+    uhOhMessage.style.left = "50%";
+    uhOhMessage.style.transform = "translate(-50%, -50%)";
+    uhOhMessage.style.fontSize = "4rem";
+    uhOhMessage.style.color = "red";
+    uhOhMessage.style.zIndex = "1000";
+    document.body.appendChild(uhOhMessage);
+
+    setTimeout(function() {
+        document.body.removeChild(uhOhMessage);
+    }, 2000);
+}
+
+window.onload = function() {
+    var playerNames = getPlayerNames();
+    var dropdown = document.getElementById("player-names-dropdown");
+    for (var i = 0; i < playerNames.length; i++) {
+        var option = document.createElement("option");
+        option.value = playerNames[i].name;
+        option.textContent = playerNames[i].name + " - Wins: " + playerNames[i].wins;
+        dropdown.appendChild(option);
+    }
+};
