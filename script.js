@@ -69,7 +69,7 @@ function guess() {
             } else {
                 document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
             }
-            if (estremoMinimo === estremoMassimo) {
+            if (estremoMinimo + 2 === estremoMassimo) {
                 displayUhOhMessage();
             }
             switchPlayer();
