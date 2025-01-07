@@ -61,3 +61,18 @@
 	top:0;
 	left:0;
 }
+
+#main {
+    position: relative;
+    z-index: 1;
+}
+
+#paga {
+    position: relative;
+    z-index: 1;
+}
+
+.text-center.mt-3 {
+    position: relative;
+    z-index: 2;
+}

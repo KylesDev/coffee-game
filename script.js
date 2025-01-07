@@ -1,4 +1,4 @@
-var numeroSegreto = Math.floor(Math.random() * 10000);
+var numeroSegreto = 21;
 var estremoMinimo = 0;
 var estremoMassimo = 9999;
 
@@ -67,7 +67,7 @@ function guess() {
             } else {
                 document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
             }
-            if (estremoMinimo === estremoMassimo) {
+            if (estremoMinimo + 2 === estremoMassimo) {
                 displayUhOhMessage();
             }
         }
@@ -215,11 +215,27 @@ function displayUhOhMessage() {
     uhOhMessage.style.transform = "translate(-50%, -50%)";
     uhOhMessage.style.fontSize = "4rem";
     uhOhMessage.style.color = "red";
+    uhOhMessage.style.backgroundColor = "rgba(128, 128, 128, 0.5)";
+    uhOhMessage.style.padding = "20px";
+    uhOhMessage.style.borderRadius = "15px";
     uhOhMessage.style.zIndex = "1000";
+    uhOhMessage.style.opacity = "0";
+    uhOhMessage.style.transition = "opacity 0.5s ease-in-out";
+    uhOhMessage.style.display = "flex";
+    uhOhMessage.style.justifyContent = "center";
+    uhOhMessage.style.alignItems = "center";
+    uhOhMessage.style.whiteSpace = "nowrap";
     document.body.appendChild(uhOhMessage);
 
     setTimeout(function() {
-        document.body.removeChild(uhOhMessage);
+        uhOhMessage.style.opacity = "1";
+    }, 10);
+
+    setTimeout(function() {
+        uhOhMessage.style.opacity = "0";
+        setTimeout(function() {
+            document.body.removeChild(uhOhMessage);
+        }, 500);
     }, 2000);
 }
 

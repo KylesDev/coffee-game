@@ -9,6 +9,9 @@
 </head>
 <body>
     <div class="container mt-5">
+
+        <button type="button" class="btn btn-secondary mt-3" onclick="window.history.back()">Back</button>
+
         <h1 class="text-center">Manage Player Names</h1>
         <form id="player-form" class="mt-4">
             <div class="form-group">
@@ -23,6 +26,9 @@
             <button type="button" class="btn btn-secondary" onclick="editPlayer()">Edit Player</button>
             <button type="button" class="btn btn-danger" onclick="deletePlayer()">Delete Player</button>
         </form>
+
+
+
         <div class="mt-4">
             <h2>Saved Players</h2>
             <ul id="player-list" class="list-group">
@@ -54,8 +60,8 @@
 
         function addPlayer() {
             var playerName = document.getElementById("player-name").value;
-            var playerWins = document.getElementById("player-wins").value;
-            if (playerName && playerWins) {
+            var playerWins = document.getElementById("player-wins").value || 0;
+            if (playerName) {
                 var playerNames = getPlayerNames();
                 playerNames.push({ name: playerName, wins: parseInt(playerWins) });
                 savePlayerNames(playerNames);
