@@ -20,13 +20,13 @@
                 <input type="number" class="form-control" id="player-wins" placeholder="Enter number of wins">
             </div>
             <button type="button" class="btn btn-primary" onclick="addPlayer()">Add Player</button>
-            <button type="button" class="btn btn-secondary" onclick="editPlayer()">Edit Player</button>
+            <button type="button" class="btn btn-warning" onclick="editPlayer()">Edit Player</button>
             <button type="button" class="btn btn-danger" onclick="deletePlayer()">Delete Player</button>
         </form>
         <div class="mt-4">
             <h2>Saved Players</h2>
             <ul id="player-list" class="list-group">
-                <!-- Player names will be displayed here -->
+                <!-- Saved players will be displayed here -->
             </ul>
         </div>
     </div>
@@ -52,14 +52,31 @@
             return [];
         }
 
+        function displayPlayerNames() {
+            var playerNames = getPlayerNames();
+            var playerList = document.getElementById("player-list");
+            playerList.innerHTML = "";
+            for (var i = 0; i < playerNames.length; i++) {
+                var li = document.createElement("li");
+                li.className = "list-group-item";
+                li.textContent = playerNames[i].name + " - Wins: " + playerNames[i].wins;
+                li.onclick = function() {
+                    document.getElementById("player-name").value = playerNames[i].name;
+                    document.getElementById("player-wins").value = playerNames[i].wins;
+                };
+                playerList.appendChild(li);
+            }
+        }
+
         function addPlayer() {
             var playerName = document.getElementById("player-name").value;
             var playerWins = document.getElementById("player-wins").value;
             if (playerName && playerWins) {
                 var playerNames = getPlayerNames();
-                playerNames.push({ name: playerName, wins: parseInt(playerWins) });
+                playerNames.push({ name: playerName, wins: Number(playerWins) });
                 savePlayerNames(playerNames);
                 displayPlayerNames();
+                document.getElementById("player-form").reset();
             }
         }
 
@@ -70,12 +87,13 @@
                 var playerNames = getPlayerNames();
                 for (var i = 0; i < playerNames.length; i++) {
                     if (playerNames[i].name === playerName) {
-                        playerNames[i].wins = parseInt(playerWins);
+                        playerNames[i].wins = Number(playerWins);
                         break;
                     }
                 }
                 savePlayerNames(playerNames);
                 displayPlayerNames();
+                document.getElementById("player-form").reset();
             }
         }
 
@@ -88,24 +106,13 @@
                 });
                 savePlayerNames(playerNames);
                 displayPlayerNames();
-            }
-        }
-
-        function displayPlayerNames() {
-            var playerNames = getPlayerNames();
-            var playerList = document.getElementById("player-list");
-            playerList.innerHTML = "";
-            for (var i = 0; i < playerNames.length; i++) {
-                var li = document.createElement("li");
-                li.className = "list-group-item";
-                li.textContent = playerNames[i].name + " - Wins: " + playerNames[i].wins;
-                playerList.appendChild(li);
+                document.getElementById("player-form").reset();
             }
         }
 
         window.onload = function() {
             displayPlayerNames();
-        }
+        };
     </script>
 </body>
 </html>
