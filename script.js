@@ -1,4 +1,4 @@
-var numeroSegreto = Math.floor(Math.random() * 10000);
+var numeroSegreto = 2500
 var estremoMinimo = 0;
 var estremoMassimo = 9999;
 var players = [];
@@ -102,6 +102,7 @@ function saveHighScore(min, max) {
 function displayLeaderboard() {
     var leaderboardDiv = document.getElementById("leaderboard");
     leaderboardDiv.innerHTML = "<h2>Leaderboard</h2>";
+    leaderboard.reverse();
     leaderboard.forEach((score, index) => {
         var scoreDiv = document.createElement("div");
         scoreDiv.innerText = (index + 1) + ". " + score.player + ": " + score.interval;
