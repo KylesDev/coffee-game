@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="player-management.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="title text-center">Player Management</h1>
+        <form id="player-form" class="text-center">
+            <div class="form-group">
+                <label for="player-name">Player Name:</label>
+                <input type="text" class="form-control" id="player-name" placeholder="Enter player name">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="savePlayer()">Save Player</button>
+        </form>
+        <div class="text-center mt-3">
+            <button type="button" class="btn btn-danger" onclick="deletePlayer()">Delete Player</button>
+        </div>
+        <div class="text-center mt-3">
+            <button type="button" class="btn btn-secondary" onclick="returnToMainPage()">Return to Main Page</button>
+        </div>
+    </div>
+</body>
+</html>

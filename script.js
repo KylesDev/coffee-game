@@ -139,7 +139,7 @@ function loadLeaderboard() {
 }
 
 function managePlayers() {
-    // Placeholder for player management functionality
+    window.location.href = "player-management.html";
 }
 
 function startGame() {
