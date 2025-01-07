@@ -1,6 +1,8 @@
-var numeroSegreto = 21;
+var numeroSegreto = Math.floor(Math.random() * 10000);
 var estremoMinimo = 0;
 var estremoMassimo = 9999;
+var players = [];
+var currentPlayerIndex = 0;
 
 function isValid(numero) {
 	if (numero < estremoMinimo || numero > estremoMassimo) {
@@ -67,9 +69,10 @@ function guess() {
             } else {
                 document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
             }
-            if (estremoMinimo + 2 === estremoMassimo) {
+            if (estremoMinimo === estremoMassimo) {
                 displayUhOhMessage();
             }
+            switchPlayer();
         }
     }
 }
@@ -163,7 +166,7 @@ function getPlayerNames() {
 
 function updateWins() {
     var playerNames = getPlayerNames();
-    var activePlayer = document.getElementById("player-names-dropdown").value;
+    var activePlayer = players[currentPlayerIndex];
     for (var i = 0; i < playerNames.length; i++) {
         if (playerNames[i].name === activePlayer) {
             playerNames[i].wins = (playerNames[i].wins || 0) + 1;
@@ -195,7 +198,7 @@ function getLeaderboard() {
 
 function updateLeaderboard() {
     var leaderboard = getLeaderboard();
-    var activePlayer = document.getElementById("player-names-dropdown").value;
+    var activePlayer = players[currentPlayerIndex];
     var interval = estremoMassimo - estremoMinimo;
     leaderboard.push({ player: activePlayer, interval: interval });
     leaderboard.sort(function(a, b) { return b.interval - a.interval; });
@@ -215,28 +218,68 @@ function displayUhOhMessage() {
     uhOhMessage.style.transform = "translate(-50%, -50%)";
     uhOhMessage.style.fontSize = "4rem";
     uhOhMessage.style.color = "red";
-    uhOhMessage.style.backgroundColor = "rgba(128, 128, 128, 0.5)";
-    uhOhMessage.style.padding = "20px";
-    uhOhMessage.style.borderRadius = "15px";
     uhOhMessage.style.zIndex = "1000";
-    uhOhMessage.style.opacity = "0";
-    uhOhMessage.style.transition = "opacity 0.5s ease-in-out";
-    uhOhMessage.style.display = "flex";
-    uhOhMessage.style.justifyContent = "center";
-    uhOhMessage.style.alignItems = "center";
-    uhOhMessage.style.whiteSpace = "nowrap";
     document.body.appendChild(uhOhMessage);
 
     setTimeout(function() {
-        uhOhMessage.style.opacity = "1";
-    }, 10);
-
-    setTimeout(function() {
-        uhOhMessage.style.opacity = "0";
-        setTimeout(function() {
-            document.body.removeChild(uhOhMessage);
-        }, 500);
+        document.body.removeChild(uhOhMessage);
     }, 2000);
+}
+
+function displayPlayerButtons() {
+    var playerNames = getPlayerNames();
+    var playerButtonsContainer = document.getElementById("player-buttons");
+    playerButtonsContainer.innerHTML = "";
+    for (var i = 0; i < playerNames.length; i++) {
+        var button = document.createElement("button");
+        button.className = "btn btn-outline-dark m-2";
+        button.textContent = playerNames[i].name;
+        button.onclick = function() {
+            this.classList.toggle("btn-outline-dark");
+            this.classList.toggle("btn-primary");
+            updateStartButtonState();
+        };
+        playerButtonsContainer.appendChild(button);
+    }
+}
+
+function updateStartButtonState() {
+    var selectedPlayers = document.querySelectorAll("#player-buttons .btn-primary");
+    var startButton = document.getElementById("start-game");
+    if (selectedPlayers.length >= 2) {
+        startButton.classList.remove("btn-secondary");
+        startButton.classList.add("btn-success");
+        startButton.disabled = false;
+    } else {
+        startButton.classList.remove("btn-success");
+        startButton.classList.add("btn-secondary");
+        startButton.disabled = true;
+    }
+}
+
+function startGame() {
+    var selectedPlayers = document.querySelectorAll("#player-buttons .btn-primary");
+    players = Array.from(selectedPlayers).map(button => button.textContent);
+    document.getElementById("player-selection").style.display = "none";
+    document.getElementById("main").style.display = "block";
+    updateActivePlayerDisplay();
+}
+
+function switchPlayer() {
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    updateActivePlayerDisplay();
+}
+
+function updateActivePlayerDisplay() {
+    var activePlayer = players[currentPlayerIndex];
+    var activePlayerDisplay = document.getElementById("active-player");
+    if (!activePlayerDisplay) {
+        activePlayerDisplay = document.createElement("div");
+        activePlayerDisplay.id = "active-player";
+        activePlayerDisplay.className = "text-center mt-3";
+        document.getElementById("main").insertBefore(activePlayerDisplay, document.getElementById("numero").parentNode);
+    }
+    activePlayerDisplay.textContent = "Current Player: " + activePlayer;
 }
 
 window.onload = function() {
@@ -248,4 +291,5 @@ window.onload = function() {
         option.textContent = playerNames[i].name + " - Wins: " + playerNames[i].wins;
         dropdown.appendChild(option);
     }
+    displayPlayerButtons();
 };
