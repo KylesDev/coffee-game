@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Leaderboard</h1>
+        <div class="mt-4">
+            <h2>Top 20 Records</h2>
+            <ul id="leaderboard-list" class="list-group">
+                <!-- Leaderboard records will be displayed here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function getLeaderboard() {
+            var name = "leaderboard=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return JSON.parse(c.substring(name.length, c.length));
+                }
+            }
+            return [];
+        }
+
+        function displayLeaderboard() {
+            var leaderboard = getLeaderboard();
+            var leaderboardList = document.getElementById("leaderboard-list");
+            leaderboardList.innerHTML = "";
+            for (var i = 0; i < leaderboard.length; i++) {
+                var li = document.createElement("li");
+                li.className = "list-group-item";
+                li.textContent = leaderboard[i].player + " - Interval: " + leaderboard[i].interval;
+                leaderboardList.appendChild(li);
+            }
+        }
+
+        window.onload = function() {
+            displayLeaderboard();
+        }
+    </script>
+</body>
+</html>

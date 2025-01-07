@@ -1,11 +1,7 @@
-// seleziona un numero segreto tra 0 e 9999
 var numeroSegreto = Math.floor(Math.random() * 10000);
-
-// definisci le variabili per gli estremi dell'intervallo
 var estremoMinimo = 0;
 var estremoMassimo = 9999;
 
-// funzione per verificare se il numero inserito Ã¨ valido
 function isValid(numero) {
 	if (numero < estremoMinimo || numero > estremoMassimo) {
 		return false;
@@ -13,7 +9,6 @@ function isValid(numero) {
 	return true;
 }
 
-// funzione per restringere l'intervallo
 function restringiIntervallo(numero) {
   if (numero < numeroSegreto) {
     estremoMinimo = Math.max(estremoMinimo, numero);
@@ -38,9 +33,6 @@ function restringiIntervallo(numero) {
   }
 }
 
-
-
-// funzione per gestire il tentativo di indovinare il numero
 function guess() {
     var input = document.getElementById("numero");
     var numero = input.value;
@@ -53,7 +45,9 @@ function guess() {
             document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
             document.getElementById("main").style.opacity = 0;
             document.getElementById("paga").style.opacity = 1;
-            gimmick('body')
+            gimmick('body');
+            updateWins();
+            updateLeaderboard();
         } else {
             input.value = "";
             document.getElementById("estremo-minimo").innerHTML = estremoMinimo;
@@ -77,14 +71,12 @@ function guess() {
     }
 }
 
-
 document.getElementById("numero").addEventListener("keydown", function(event) {
 	if (event.keyCode === 13) {
 		event.preventDefault();
 		guess();
 	}
 });
-
 
 function gimmick(el) {
   var exists = document.getElementById('gimmick')
@@ -104,7 +96,6 @@ function gimmick(el) {
 
   var coin = new Image();
   coin.src = 'assets/coin.png'
-  // 440 wide, 40 high, 10 states
   coin.onload = function () {
       element.appendChild(canvas)
       focused = true;
@@ -145,6 +136,68 @@ function gimmick(el) {
           }
       }
   }
-
 }
 
+function savePlayerNames(names) {
+    document.cookie = "playerNames=" + JSON.stringify(names) + "; path=/";
+}
+
+function getPlayerNames() {
+    var name = "playerNames=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return JSON.parse(c.substring(name.length, c.length));
+        }
+    }
+    return [];
+}
+
+function updateWins() {
+    var playerNames = getPlayerNames();
+    var activePlayer = document.getElementById("player-names-dropdown").value;
+    for (var i = 0; i < playerNames.length; i++) {
+        if (playerNames[i].name === activePlayer) {
+            playerNames[i].wins = (playerNames[i].wins || 0) + 1;
+            break;
+        }
+    }
+    savePlayerNames(playerNames);
+}
+
+function saveLeaderboard(leaderboard) {
+    document.cookie = "leaderboard=" + JSON.stringify(leaderboard) + "; path=/";
+}
+
+function getLeaderboard() {
+    var name = "leaderboard=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return JSON.parse(c.substring(name.length, c.length));
+        }
+    }
+    return [];
+}
+
+function updateLeaderboard() {
+    var leaderboard = getLeaderboard();
+    var activePlayer = document.getElementById("player-names-dropdown").value;
+    var interval = estremoMassimo - estremoMinimo;
+    leaderboard.push({ player: activePlayer, interval: interval });
+    leaderboard.sort(function(a, b) { return b.interval - a.interval; });
+    if (leaderboard.length > 20) {
+        leaderboard.pop();
+    }
+    saveLeaderboard(leaderboard);
+}
