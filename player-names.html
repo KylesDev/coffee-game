@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Player Names</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Manage Player Names</h1>
+        <form id="player-form" class="mt-4">
+            <div class="form-group">
+                <label for="player-name">Player Name</label>
+                <input type="text" class="form-control" id="player-name" placeholder="Enter player name">
+            </div>
+            <div class="form-group">
+                <label for="player-wins">Number of Wins</label>
+                <input type="number" class="form-control" id="player-wins" placeholder="Enter number of wins">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addPlayer()">Add Player</button>
+            <button type="button" class="btn btn-warning" onclick="editPlayer()">Edit Player</button>
+            <button type="button" class="btn btn-danger" onclick="deletePlayer()">Delete Player</button>
+        </form>
+        <div class="mt-4">
+            <h2>Saved Players</h2>
+            <ul id="player-list" class="list-group">
+                <!-- Saved players will be displayed here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function savePlayerNames(names) {
+            document.cookie = "playerNames=" + JSON.stringify(names) + "; path=/";
+        }
+
+        function getPlayerNames() {
+            var name = "playerNames=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return JSON.parse(c.substring(name.length, c.length));
+                }
+            }
+            return [];
+        }
+
+        function displayPlayerNames() {
+            var playerNames = getPlayerNames();
+            var playerList = document.getElementById("player-list");
+            playerList.innerHTML = "";
+            for (var i = 0; i < playerNames.length; i++) {
+                var li = document.createElement("li");
+                li.className = "list-group-item";
+                li.textContent = playerNames[i].name + " - Wins: " + playerNames[i].wins;
+                li.onclick = function() {
+                    document.getElementById("player-name").value = playerNames[i].name;
+                    document.getElementById("player-wins").value = playerNames[i].wins;
+                };
+                playerList.appendChild(li);
+            }
+        }
+
+        function addPlayer() {
+            var playerName = document.getElementById("player-name").value;
+            var playerWins = document.getElementById("player-wins").value;
+            if (playerName && playerWins) {
+                var playerNames = getPlayerNames();
+                playerNames.push({ name: playerName, wins: Number(playerWins) });
+                savePlayerNames(playerNames);
+                displayPlayerNames();
+                document.getElementById("player-form").reset();
+            }
+        }
+
+        function editPlayer() {
+            var playerName = document.getElementById("player-name").value;
+            var playerWins = document.getElementById("player-wins").value;
+            if (playerName && playerWins) {
+                var playerNames = getPlayerNames();
+                for (var i = 0; i < playerNames.length; i++) {
+                    if (playerNames[i].name === playerName) {
+                        playerNames[i].wins = Number(playerWins);
+                        break;
+                    }
+                }
+                savePlayerNames(playerNames);
+                displayPlayerNames();
+                document.getElementById("player-form").reset();
+            }
+        }
+
+        function deletePlayer() {
+            var playerName = document.getElementById("player-name").value;
+            if (playerName) {
+                var playerNames = getPlayerNames();
+                playerNames = playerNames.filter(function(player) {
+                    return player.name !== playerName;
+                });
+                savePlayerNames(playerNames);
+                displayPlayerNames();
+                document.getElementById("player-form").reset();
+            }
+        }
+
+        window.onload = function() {
+            displayPlayerNames();
+        };
+    </script>
+</body>
+</html>
