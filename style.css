@@ -61,3 +61,47 @@
 	top:0;
 	left:0;
 }
+
+/* Styles for the new landing page, player buttons, and start button */
+#player-selection {
+    text-align: center;
+}
+
+#player-buttons .btn {
+    background-color: white;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+#player-buttons .btn-primary {
+    background-color: blue;
+    border-color: blue;
+}
+
+#start-button.btn-success {
+    background-color: green;
+    border-color: green;
+}
+
+/* Styles for the currently active player display during the game */
+#current-player {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Styles for the leaderboard display */
+#leaderboard {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#leaderboard h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#leaderboard div {
+    font-size: 1.2em;
+    margin: 5px 0;
+}
