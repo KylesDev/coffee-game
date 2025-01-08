@@ -111,12 +111,19 @@ function displayLeaderboard() {
     leaderboardDiv.style.display = "block";
 }
 
+function getExpirationDateForCookie() {
+    var date = new Date();
+    date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+    return "expires=" + date.toUTCString() + "; ";
+
+}
+
 function savePlayers() {
-    document.cookie = "players=" + JSON.stringify(players) + "; path=/";
+    document.cookie = "players=" + JSON.stringify(players) + ";" + getExpirationDateForCookie() + "path=/";
 }
 
 function saveLeaderboard() {
-    document.cookie = "leaderboard=" + JSON.stringify(leaderboard) + "; path=/";
+    document.cookie = "leaderboard=" + JSON.stringify(leaderboard) + ";" + getExpirationDateForCookie() + "path=/";
 }
 
 function loadPlayers() {
@@ -143,8 +150,18 @@ function managePlayers() {
     window.location.href = "player-management.html";
 }
 
+function setEnterAsGuess() {
+    document.getElementById("numero").addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            guess();
+        }
+    });
+}
+
 function startGame() {
     if (selectedPlayers.length >= 2) {
+        document.getElementById("padding-br").remove();
         document.getElementById("player-selection").style.display = "none";
         document.getElementById("main").style.display = "block";
         displayCurrentPlayer();
@@ -259,9 +276,15 @@ function gimmick(el) {
     }
 }
 
+function updateCookiesExpiration() {
+    document.cookie = "players=" + JSON.stringify(players) + ";" + getExpirationDateForCookie() + "path=/";
+    document.cookie = "leaderboard=" + JSON.stringify(leaderboard) + ";" + getExpirationDateForCookie() + "path=/";
+}
+
 window.onload = function() {
     loadPlayers();
     loadLeaderboard();
     updatePlayerButtons();
     updateStartButton();
+    updateCookiesExpiration();
 };

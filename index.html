@@ -8,20 +8,34 @@
     <script src="player-management.js"></script>
 </head>
 <body>
-  <div id="player-selection" class="container-fluid mt-5">
+<div id="player-selection" class="container-fluid mt-5">
     <h1 class="title text-center">Player Selection</h1>
     <div class="row d-flex flex-column justify-content-center">
         <div class="text-center">
             <button type="button" class="btn btn-secondary" onclick="managePlayers()">Player Management</button>
-            <button type="button" class="btn btn-secondary" id="start-button" onclick="startGame()" disabled>Start</button>
+            <button type="button" class="btn btn-secondary" id="start-button" onclick="startGame()" disabled>Start
+            </button>
         </div>
         <div id="player-buttons" class="mx-5 my-0">
             <!-- Player buttons will be dynamically added here -->
         </div>
     </div>
-  </div>
+</div>
 
-  <div id="main" class="container-fluid mt-5" style="display: none;">
+<div id="padding-br">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+<div id="main" class="container-fluid mt-5" style="display: none;">
     <h1 class="title text-center">Chi paga il caff&egrave;?</h1>
     <div id="current-player" class="text-center"></div>
     <div class="row d-flex flex-column justify-content-center">
@@ -30,7 +44,8 @@
         </div>
         <div class="mx-5 my-0">
             <div class="form-group m-0">
-                <input type="number" class="form-control" id="numero" min="0" max="9999" placeholder="Inserisci un numero">
+                <input type="number" class="form-control" id="numero" min="0" max="9999"
+                       placeholder="Inserisci un numero">
             </div>
         </div>
         <div class="mx-5 my-0">
@@ -52,13 +67,13 @@
             </div>
         </div>
     </div>
-  </div>
-  <h1 id="paga" class='text-center display-1 mt-5'>PAGARE !!!</h1>
+</div>
+<h1 id="paga" class='text-center display-1 mt-5'>PAGARE !!!</h1>
 
-  <div id="leaderboard" class="container-fluid mt-5">
+<div id="leaderboard" class="container-fluid mt-5">
     <h2 class="title text-center">Leaderboard</h2>
     <!-- Leaderboard entries will be dynamically added here -->
-  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
