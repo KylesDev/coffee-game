@@ -67,7 +67,7 @@ function appendDigit(digit) {
     // Only append if the value starts with the autofill prefix
     if (currentValue.startsWith(autofill) || currentValue === '') {
         var newValue = currentValue + digit;
-        var numValue = parseInt(newValue);
+        var numValue = parseInt(newValue, 10);
         
         // Check if the new value is within valid range
         if (numValue >= estremoMinimo && numValue <= estremoMassimo) {
@@ -92,11 +92,11 @@ function backspaceDigit() {
 
 function guess() {
     var input = document.getElementById("numero");
-    var numero = input.value;
+    var numero = parseInt(input.value, 10);
     if (!isValid(numero)) {
         alert("Inserisci un numero valido tra " + estremoMinimo + " e " + estremoMassimo + ".");
     } else {
-        if (numero == numeroSegreto) {
+        if (numero === numeroSegreto) {
             document.getElementById("numero").value = "";
             document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
             document.getElementById("main").style.opacity = 0;
