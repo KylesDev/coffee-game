@@ -38,6 +38,7 @@
 <div id="main" class="container-fluid mt-5" style="display: none;">
     <h1 class="title text-center">Chi paga il caff&egrave;?</h1>
     <div id="current-player" class="text-center"></div>
+    <div id="chance-percentage" class="text-center chance-display"></div>
     <div class="row d-flex flex-column justify-content-center">
         <div class="mx-5 my-0">
             <div id="estremo-massimo" class="text-center estremo">9999</div>
@@ -45,14 +46,27 @@
         <div class="mx-5 my-0">
             <div class="form-group m-0">
                 <input type="number" class="form-control" id="numero" min="0" max="9999"
-                       placeholder="Inserisci un numero">
+                       placeholder="Inserisci un numero" readonly>
             </div>
         </div>
         <div class="mx-5 my-0">
             <div id="estremo-minimo" class="text-center estremo">0</div>
         </div>
         <div class="text-center">
-            <button type="button" class="btn btn-primary" onclick="guess()">Indovina</button>
+            <div id="numpad" class="numpad">
+                <button type="button" class="numpad-btn" onclick="appendDigit('7')">7</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('8')">8</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('9')">9</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('4')">4</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('5')">5</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('6')">6</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('1')">1</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('2')">2</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('3')">3</button>
+                <button type="button" class="numpad-btn numpad-backspace" onclick="backspaceDigit()">&#9003;</button>
+                <button type="button" class="numpad-btn" onclick="appendDigit('0')">0</button>
+                <button type="button" class="numpad-btn numpad-enter" onclick="guess()">&#9166;</button>
+            </div>
         </div>
     </div>
     <div id="sudoreGif" class="row sudore">

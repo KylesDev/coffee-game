@@ -106,3 +106,98 @@
     font-size: 1.2em;
     margin: 5px 0;
 }
+
+/* Styles for chance percentage display */
+.chance-display {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #007bff;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+/* Styles for numeric keypad */
+.numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.numpad-btn {
+    background-color: #f8f9fa;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #007bff;
+}
+
+.numpad-btn:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+
+.numpad-btn:active {
+    transform: scale(0.95);
+}
+
+.numpad-enter {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.numpad-enter:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.numpad-backspace {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.numpad-backspace:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Make input field more prominent on mobile */
+#numero {
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Improve mobile layout */
+@media (max-width: 768px) {
+    .estremo {
+        font-size: 1.8em;
+        padding: 15px;
+    }
+    
+    #current-player {
+        font-size: 1.3em;
+    }
+    
+    .chance-display {
+        font-size: 1.5em;
+    }
+    
+    #numero {
+        font-size: 1.8em;
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 1.8em;
+    }
+}
