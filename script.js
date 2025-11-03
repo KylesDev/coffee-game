@@ -20,8 +20,16 @@ function restringiIntervallo(numero) {
         estremoMassimo = Math.min(estremoMassimo, numero);
     }
 
-    var minStr = estremoMinimo.toString();
-    var maxStr = estremoMassimo.toString();
+    updateAutoFill();
+}
+
+function updateAutoFill() {
+    // Calculate the actual valid range (excluding bounds)
+    var validMin = estremoMinimo + 1;
+    var validMax = estremoMassimo - 1;
+    
+    var minStr = validMin.toString();
+    var maxStr = validMax.toString();
 
     if (minStr.length === maxStr.length) {
         var cifreForzate = "";
@@ -33,17 +41,67 @@ function restringiIntervallo(numero) {
             }
         }
         var input = document.getElementById("numero");
-        input.value = cifreForzate + minStr.substring(cifreForzate.length);
+        input.value = cifreForzate;
+        input.setAttribute('data-autofill', cifreForzate);
+    } else {
+        var input = document.getElementById("numero");
+        input.value = "";
+        input.setAttribute('data-autofill', '');
+    }
+}
+
+function calculateChancePercentage() {
+    // Calculate the actual valid range (excluding bounds)
+    var range = estremoMassimo - estremoMinimo - 1;
+    if (range <= 0) return 0;
+    var percentage = (1 / range) * 100;
+    return percentage.toFixed(2);
+}
+
+function updateChanceDisplay() {
+    var percentage = calculateChancePercentage();
+    var display = document.getElementById("chance-percentage");
+    display.innerText = "Chance: " + percentage + "%";
+}
+
+function appendDigit(digit) {
+    var input = document.getElementById("numero");
+    var currentValue = input.value;
+    var autofill = input.getAttribute('data-autofill') || '';
+    
+    // Only append if the value starts with the autofill prefix
+    if (currentValue.startsWith(autofill) || currentValue === '') {
+        var newValue = currentValue + digit;
+        var numValue = parseInt(newValue, 10);
+        
+        // Check if the new value is within valid range
+        if (numValue >= estremoMinimo && numValue <= estremoMassimo) {
+            input.value = newValue;
+        } else if (newValue.length <= 4) {
+            // Allow typing even if out of range (will be validated on submit)
+            input.value = newValue;
+        }
+    }
+}
+
+function backspaceDigit() {
+    var input = document.getElementById("numero");
+    var currentValue = input.value;
+    var autofill = input.getAttribute('data-autofill') || '';
+    
+    // Only delete if we're beyond the autofill prefix
+    if (currentValue.length > autofill.length) {
+        input.value = currentValue.slice(0, -1);
     }
 }
 
 function guess() {
     var input = document.getElementById("numero");
-    var numero = input.value;
+    var numero = parseInt(input.value, 10);
     if (!isValid(numero)) {
         alert("Inserisci un numero valido tra " + estremoMinimo + " e " + estremoMassimo + ".");
     } else {
-        if (numero == numeroSegreto) {
+        if (numero === numeroSegreto) {
             document.getElementById("numero").value = "";
             document.querySelectorAll(".estremo").forEach(e => e.style.backgroundColor = "green");
             document.getElementById("main").style.opacity = 0;
@@ -54,9 +112,9 @@ function guess() {
             displayLeaderboard();
         } else {
             restringiIntervallo(numero);
-            input.value = "";
             document.getElementById("estremo-minimo").innerHTML = estremoMinimo;
             document.getElementById("estremo-massimo").innerHTML = estremoMassimo;
+            updateChanceDisplay();
             var intervallo = estremoMassimo - estremoMinimo;
             if (intervallo <= 20) {
                 document.querySelectorAll(".estremo").forEach(e => {
@@ -165,6 +223,8 @@ function startGame() {
         document.getElementById("player-selection").style.display = "none";
         document.getElementById("main").style.display = "block";
         displayCurrentPlayer();
+        updateChanceDisplay();
+        updateAutoFill();
     }
 }
 
