@@ -24,8 +24,12 @@ function restringiIntervallo(numero) {
 }
 
 function updateAutoFill() {
-    var minStr = estremoMinimo.toString();
-    var maxStr = estremoMassimo.toString();
+    // Calculate the actual valid range (excluding bounds)
+    var validMin = estremoMinimo + 1;
+    var validMax = estremoMassimo - 1;
+    
+    var minStr = validMin.toString();
+    var maxStr = validMax.toString();
 
     if (minStr.length === maxStr.length) {
         var cifreForzate = "";
@@ -47,7 +51,8 @@ function updateAutoFill() {
 }
 
 function calculateChancePercentage() {
-    var range = estremoMassimo - estremoMinimo + 1;
+    // Calculate the actual valid range (excluding bounds)
+    var range = estremoMassimo - estremoMinimo - 1;
     if (range <= 0) return 0;
     var percentage = (1 / range) * 100;
     return percentage.toFixed(2);
